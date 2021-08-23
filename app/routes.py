@@ -1,6 +1,5 @@
 from flask import render_template
 from app import application
-from app import forms
 from app.forms import LoginForm
 
 @application.route('/')
@@ -19,7 +18,7 @@ def home():
     ]
     return render_template('index.html', user=user, posts=posts)
 
-@application.route('/Login')
+@application.route('/login')
 def login():
-    form = LoginForm
-    return render_template('login.html', title='Log in', form=form)
+    log_form = LoginForm()
+    return render_template('login.html', title='Log in', form=log_form)
