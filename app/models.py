@@ -1,5 +1,4 @@
 from datetime import datetime
-from sqlalchemy.orm import backref
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -35,4 +34,4 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return "<Post {}>".format(self.body)
+        return '<Post {}>'.format(self.body)
