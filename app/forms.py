@@ -1,6 +1,8 @@
+from flask.app import Flask
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.fields.simple import TextAreaField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from app.models import User
 
 
@@ -27,3 +29,9 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('email address already in use')
+
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    bio = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    submit = SubmitField('Submit')
