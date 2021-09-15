@@ -8,6 +8,7 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
 application = Flask(__name__)
 application.config.from_object(Config)
@@ -17,6 +18,7 @@ login = LoginManager(application)
 login.login_view = 'login'
 mail = Mail(application)
 bootstrap = Bootstrap(application)
+moment = Moment(application)
 
 
 if not application.debug:
