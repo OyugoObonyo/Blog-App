@@ -12,8 +12,13 @@ from flask_moment import Moment
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
 from flask import request
+from app.errors import bp as errors_bp
+from app.auth import bp as auth_bp
+
 
 application = Flask(__name__)
+application.register_blueprint(errors_bp)
+application.register_blueprint(auth_bp)
 application.config.from_object(Config)
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)
@@ -60,4 +65,4 @@ if not application.debug:
         return request.accept_languages.best_match(application.config['LANGUAGES'])
 
 
-    from app import routes, models, errors
+    from app import routes, models
