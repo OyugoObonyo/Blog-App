@@ -12,9 +12,7 @@ from flask_moment import Moment
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
 from flask import request
-from app.errors import bp as errors_bp
-from app.auth import bp as auth_bp
-from app.main import bp as main_bp
+from elasticsearch import Elasticsearch
 
 
 db = SQLAlchemy()
@@ -39,9 +37,16 @@ def create_app(config_class=Config):
     bootstrap.init_app(application)
     moment.init_app(application)
     babel.init_app(application)
+    application.elasticsearch = Elasticsearch([application.config['ELASTICSEARCH_URL']]) \
+        if application.config['ELASTICSEARCH_URL'] else None
 
+    from app.errors import bp as errors_bp
     application.register_blueprint(errors_bp)
+
+    from app.auth import bp as auth_bp
     application.register_blueprint(auth_bp)
+
+    from app.main import bp as main_bp
     application.register_blueprint(main_bp)
 
     if not application.debug and not application.testing:
@@ -80,4 +85,4 @@ def create_app(config_class=Config):
 def get_locale():
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
 
-from app import routes, models
+from app import models
