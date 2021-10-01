@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.fields.simple import TextAreaField
 from wtforms.validators import DataRequired, Length, ValidationError
 from app.models import User
+from flask_babel import _, lazy_gettext as _l
 from flask import request
 
 
